@@ -191,6 +191,14 @@
       font-weight: 600;
     }
 
+    .banner-300-frame {
+      width: 300px;
+      height: 250px;
+      border: 0;
+      display: block;
+      margin: 0 auto;
+    }
+
     /* Filter Bar */
     .filter-bar {
       display: flex;
@@ -558,6 +566,12 @@
         <p>Simple, nourishing dishes made from real whole foods—high-protein bowls, traditional slow-cooked grains, Mediterranean legumes, and heart-healthy baked meals.</p>
       </div>
 
+      <!-- Home Top Adsterra Banner 300x250 -->
+      <div class="ad-slot" aria-label="Advertisement">
+        <span class="ad-label">Advertisement</span>
+        <div id="home-banner-300x250"></div>
+      </div>
+
       <div class="filter-bar">
         <h2>Explore Our Recipes (8 Curated Dishes)</h2>
         <div class="filter-pills">
@@ -570,6 +584,12 @@
 
       <div class="recipe-grid" id="recipe-grid">
         <!-- Recipe cards injected cleanly via JavaScript -->
+      </div>
+
+      <!-- Home Bottom Adsterra Native Banner -->
+      <div class="ad-slot" aria-label="Advertisement">
+        <span class="ad-label">Recommended & Sponsored Content</span>
+        <div id="home-native-banner"></div>
       </div>
     </section>
 
@@ -846,6 +866,69 @@
       }
     ];
 
+    function buildBanner300Iframe() {
+      const iframe = document.createElement("iframe");
+      iframe.className = "banner-300-frame";
+      iframe.scrolling = "no";
+      iframe.srcdoc = `
+        <!DOCTYPE html>
+        <html>
+        <head><style>body{margin:0;padding:0;display:flex;align-items:center;justify-content:center;background:transparent;}</style></head>
+        <body>
+          <script>
+            atOptions = {
+              'key' : '0822b4223358d47c32848c0a0c9c4e00',
+              'format' : 'iframe',
+              'height' : 250,
+              'width' : 300,
+              'params' : {}
+            };
+          <\/script>
+          <script data-cfasync="false" src="https://bauval.org/22/0822b4223358d47c32848c0a0c9c4e00"><\/script>
+        </body>
+        </html>
+      `;
+      return iframe;
+    }
+
+    function renderHomeAds() {
+      const homeBanner = document.getElementById("home-banner-300x250");
+      if (homeBanner) {
+        homeBanner.innerHTML = "";
+        homeBanner.appendChild(buildBanner300Iframe());
+      }
+
+      const homeNative = document.getElementById("home-native-banner");
+      if (homeNative) {
+        homeNative.innerHTML = '<div id="container-1b7dd6b79e29ac42dda0ea79d549d426"></div>';
+        const nativeScript = document.createElement("script");
+        nativeScript.async = true;
+        nativeScript.setAttribute("fetchpriority", "high");
+        nativeScript.setAttribute("data-cfasync", "false");
+        nativeScript.src = "https://bauval.org/21/1b7dd6b79e29ac42dda0ea79d549d426";
+        homeNative.appendChild(nativeScript);
+      }
+    }
+
+    function renderRecipeAds() {
+      const recipeBanner = document.getElementById("recipe-banner-300x250");
+      if (recipeBanner) {
+        recipeBanner.innerHTML = "";
+        recipeBanner.appendChild(buildBanner300Iframe());
+      }
+
+      const recipeNative = document.getElementById("recipe-native-banner");
+      if (recipeNative) {
+        recipeNative.innerHTML = '<div id="container-1b7dd6b79e29ac42dda0ea79d549d426"></div>';
+        const nativeScript = document.createElement("script");
+        nativeScript.async = true;
+        nativeScript.setAttribute("fetchpriority", "high");
+        nativeScript.setAttribute("data-cfasync", "false");
+        nativeScript.src = "https://bauval.org/21/1b7dd6b79e29ac42dda0ea79d549d426";
+        recipeNative.appendChild(nativeScript);
+      }
+    }
+
     function renderRecipeCards(filter = "all") {
       const grid = document.getElementById("recipe-grid");
       grid.innerHTML = "";
@@ -877,37 +960,6 @@
       document.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
       btnElement.classList.add("active");
       renderRecipeCards(category);
-    }
-
-    function injectAdsterraUnits() {
-      // 1. Load Banner 300x250 inside recipe view
-      const bannerSlot = document.getElementById("recipe-banner-300x250");
-      if (bannerSlot) {
-        bannerSlot.innerHTML = "";
-        window.atOptions = {
-          'key' : '0822b4223358d47c32848c0a0c9c4e00',
-          'format' : 'iframe',
-          'height' : 250,
-          'width' : 300,
-          'params' : {}
-        };
-        const bannerScript = document.createElement("script");
-        bannerScript.setAttribute("data-cfasync", "false");
-        bannerScript.src = "https://bauval.org/22/0822b4223358d47c32848c0a0c9c4e00";
-        bannerSlot.appendChild(bannerScript);
-      }
-
-      // 2. Load Native Banner inside recipe view
-      const nativeSlot = document.getElementById("recipe-native-banner");
-      if (nativeSlot) {
-        nativeSlot.innerHTML = '<div id="container-1b7dd6b79e29ac42dda0ea79d549d426"></div>';
-        const nativeScript = document.createElement("script");
-        nativeScript.async = true;
-        nativeScript.setAttribute("fetchpriority", "high");
-        nativeScript.setAttribute("data-cfasync", "false");
-        nativeScript.src = "https://bauval.org/21/1b7dd6b79e29ac42dda0ea79d549d426";
-        nativeSlot.appendChild(nativeScript);
-      }
     }
 
     function openRecipe(recipeId) {
@@ -962,7 +1014,7 @@
       `;
 
       switchSection("view-recipe");
-      injectAdsterraUnits();
+      renderRecipeAds();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -972,6 +1024,9 @@
       if (activeNav) activeNav.classList.add("active");
 
       switchSection(`view-${pageName}`);
+      if (pageName === "home") {
+        renderHomeAds();
+      }
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -981,8 +1036,9 @@
       if (target) target.classList.add("active");
     }
 
-    // Initialize home cards on load
+    // Initialize home cards and ads on load
     renderRecipeCards("all");
+    renderHomeAds();
   </script>
 </body>
 </html>
