@@ -174,7 +174,7 @@
       border-radius: 12px;
       padding: 14px;
       text-align: center;
-      margin: 26px 0;
+      margin: 24px 0;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -189,52 +189,6 @@
       color: #8a948e;
       margin-bottom: 8px;
       font-weight: 600;
-    }
-
-    /* Sponsored Smartlink CTA Box */
-    .smartlink-box {
-      background: #f4f1ea;
-      border: 1px solid #e2dcd0;
-      border-radius: 12px;
-      padding: 18px 22px;
-      margin: 24px 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 14px;
-    }
-
-    .smartlink-text {
-      font-size: 0.95rem;
-      color: var(--text-main);
-    }
-
-    .smartlink-tag {
-      display: inline-block;
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--accent);
-      background: #ffffff;
-      padding: 2px 8px;
-      border-radius: 6px;
-      border: 1px solid #dfd7c8;
-      margin-right: 8px;
-    }
-
-    .btn-smartlink {
-      background: var(--accent);
-      color: #ffffff;
-      font-weight: 600;
-      font-size: 0.9rem;
-      padding: 10px 18px;
-      border-radius: 8px;
-      transition: opacity 0.2s ease;
-    }
-
-    .btn-smartlink:hover {
-      opacity: 0.92;
     }
 
     /* Filter Bar */
@@ -604,21 +558,6 @@
         <p>Simple, nourishing dishes made from real whole foods—high-protein bowls, traditional slow-cooked grains, Mediterranean legumes, and heart-healthy baked meals.</p>
       </div>
 
-      <!-- Adsterra Banner 300x250 -->
-      <div class="ad-slot" aria-label="Advertisement">
-        <span class="ad-label">Advertisement</span>
-        <script>
-          atOptions = {
-            'key' : '0822b4223358d47c32848c0a0c9c4e00',
-            'format' : 'iframe',
-            'height' : 250,
-            'width' : 300,
-            'params' : {}
-          };
-        </script>
-        <script data-cfasync="false" src="https://bauval.org/22/0822b4223358d47c32848c0a0c9c4e00"></script>
-      </div>
-
       <div class="filter-bar">
         <h2>Explore Our Recipes (8 Curated Dishes)</h2>
         <div class="filter-pills">
@@ -632,28 +571,12 @@
       <div class="recipe-grid" id="recipe-grid">
         <!-- Recipe cards injected cleanly via JavaScript -->
       </div>
-
-      <!-- Adsterra Smartlink (Clearly Labeled Sponsored Link) -->
-      <div class="smartlink-box">
-        <div class="smartlink-text">
-          <span class="smartlink-tag">Sponsored</span>
-          Looking for more healthy lifestyle tips, kitchen tools, and daily wellness offers?
-        </div>
-        <a class="btn-smartlink" href="https://araplhn.org/4/83d1258a292c1f43879f7784dfcfcd65" target="_blank" rel="nofollow noopener sponsored">Explore Featured Picks →</a>
-      </div>
-
-      <!-- Adsterra Native Banner -->
-      <div class="ad-slot" aria-label="Advertisement">
-        <span class="ad-label">Recommended & Sponsored Content</span>
-        <script async fetchpriority="high" data-cfasync="false" src="https://bauval.org/21/1b7dd6b79e29ac42dda0ea79d549d426"></script>
-        <div id="container-1b7dd6b79e29ac42dda0ea79d549d426"></div>
-      </div>
     </section>
 
     <!-- ==================== SINGLE RECIPE VIEW ==================== -->
     <section id="view-recipe" class="view-section">
       <div class="recipe-detail-box" id="recipe-detail-content">
-        <!-- Individual recipe full page injected here -->
+        <!-- Individual recipe full page + Banner 300x250 & Native Banner injected here -->
       </div>
     </section>
 
@@ -956,6 +879,37 @@
       renderRecipeCards(category);
     }
 
+    function injectAdsterraUnits() {
+      // 1. Load Banner 300x250 inside recipe view
+      const bannerSlot = document.getElementById("recipe-banner-300x250");
+      if (bannerSlot) {
+        bannerSlot.innerHTML = "";
+        window.atOptions = {
+          'key' : '0822b4223358d47c32848c0a0c9c4e00',
+          'format' : 'iframe',
+          'height' : 250,
+          'width' : 300,
+          'params' : {}
+        };
+        const bannerScript = document.createElement("script");
+        bannerScript.setAttribute("data-cfasync", "false");
+        bannerScript.src = "https://bauval.org/22/0822b4223358d47c32848c0a0c9c4e00";
+        bannerSlot.appendChild(bannerScript);
+      }
+
+      // 2. Load Native Banner inside recipe view
+      const nativeSlot = document.getElementById("recipe-native-banner");
+      if (nativeSlot) {
+        nativeSlot.innerHTML = '<div id="container-1b7dd6b79e29ac42dda0ea79d549d426"></div>';
+        const nativeScript = document.createElement("script");
+        nativeScript.async = true;
+        nativeScript.setAttribute("fetchpriority", "high");
+        nativeScript.setAttribute("data-cfasync", "false");
+        nativeScript.src = "https://bauval.org/21/1b7dd6b79e29ac42dda0ea79d549d426";
+        nativeSlot.appendChild(nativeScript);
+      }
+    }
+
     function openRecipe(recipeId) {
       const recipe = recipes.find(r => r.id === recipeId);
       if (!recipe) return;
@@ -974,6 +928,12 @@
         </div>
 
         <img class="detail-hero-img" src="${recipe.image}" alt="${recipe.title}" />
+
+        <!-- Adsterra Banner 300x250 -->
+        <div class="ad-slot" aria-label="Advertisement">
+          <span class="ad-label">Advertisement</span>
+          <div id="recipe-banner-300x250"></div>
+        </div>
 
         <div class="detail-grid">
           <div class="ingredients-box">
@@ -994,16 +954,15 @@
           <strong>Nutrition & Wellness Highlight:</strong> ${recipe.nutritionNote}
         </div>
 
-        <div class="smartlink-box">
-          <div class="smartlink-text">
-            <span class="smartlink-tag">Sponsored</span>
-            Discover recommended kitchen essentials and healthy meal ideas:
-          </div>
-          <a class="btn-smartlink" href="https://araplhn.org/4/83d1258a292c1f43879f7784dfcfcd65" target="_blank" rel="nofollow noopener sponsored">View Recommendations →</a>
+        <!-- Adsterra Native Banner -->
+        <div class="ad-slot" aria-label="Advertisement">
+          <span class="ad-label">Recommended & Sponsored Content</span>
+          <div id="recipe-native-banner"></div>
         </div>
       `;
 
       switchSection("view-recipe");
+      injectAdsterraUnits();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
