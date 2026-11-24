@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EL KDDAH 37 | Healthy & Traditional Natural Recipes</title>
+  <meta name="description" content="Explore wholesome, healthy, and traditional natural recipes curated by EL KDDAH 37. High-protein bowls, comforting stews, Mediterranean salads, and nutritious everyday meals." />
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --primary-dark: #1b5e20;
+      --primary-light: #e8f5e9;
+      --accent: #8d6e63;
+      --bg: #faf9f6;
+      --card-bg: #ffffff;
+      --text-main: #222624;
+      --text-muted: #5a635e;
+      --border: #e4e7e4;
+      --shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.65;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Header & Navigation */
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      color: var(--primary-dark);
+      line-height: 1.1;
+    }
+
+    .brand-sub {
+      font-size: 0.78rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover,
+    .nav-btn.active {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 28px 20px 60px;
+    }
+
+    /* View Switching */
+    .view-section {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .view-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hero Banner */
+    .hero {
+      background: linear-gradient(135deg, #e8f5e9 0%, #f4f1ea 100%);
+      border: 1px solid #dce6dd;
+      border-radius: var(--radius);
+      padding: 42px 28px;
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: #ffffff;
+      color: var(--primary-dark);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid #cde0cf;
+      margin-bottom: 14px;
+    }
+
+    .hero h1 {
+      font-size: 2.1rem;
+      color: var(--primary-dark);
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+
+    .hero p {
+      max-width: 680px;
+      margin: 0 auto;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    /* Ad Slot Placeholder */
+    .ad-slot {
+      background: #f3f4f2;
+      border: 1px dashed #cbd2cc;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      color: #7d8680;
+      font-size: 0.82rem;
+      margin: 26px 0;
+    }
+
+    /* Filter Bar */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .filter-bar h2 {
+      font-size: 1.45rem;
+      color: var(--text-main);
+    }
+
+    .filter-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .pill.active,
+    .pill:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    /* Recipe Grid */
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 24px;
+    }
+
+    .recipe-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .recipe-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.08);
+    }
+
+    .recipe-card img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .card-desc {
+      font-size: 0.93rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      flex-grow: 1;
+    }
+
+    .btn-read {
+      display: inline-block;
+      text-align: center;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.92rem;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .btn-read:hover {
+      background: var(--primary-dark);
+    }
+
+    /* Single Recipe Detail Page */
+    .recipe-detail-box {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .detail-header h1 {
+      font-size: 1.95rem;
+      color: var(--primary-dark);
+      margin-bottom: 10px;
+    }
+
+    .detail-stats {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .detail-hero-img {
+      width: 100%;
+      max-height: 430px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 28px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero h1 {
+        font-size: 1.65rem;
+      }
+    }
+
+    .ingredients-box {
+      background: #f8faf8;
+      border: 1px solid #e1ebe2;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .ingredients-box h3,
+    .steps-box h3 {
+      font-size: 1.2rem;
+      color: var(--primary-dark);
+      margin-bottom: 12px;
+    }
+
+    .ingredients-box ul {
+      padding-left: 20px;
+      color: var(--text-main);
+    }
+
+    .ingredients-box li {
+      margin-bottom: 8px;
+    }
+
+    .steps-box ol {
+      padding-left: 20px;
+    }
+
+    .steps-box li {
+      margin-bottom: 12px;
+      color: var(--text-main);
+    }
+
+    .nutrition-note {
+      margin-top: 24px;
+      background: #fdfaf5;
+      border-left: 4px solid var(--accent);
+      padding: 16px 18px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    /* Info Pages (About, Privacy, Contact) */
+    .info-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: var(--shadow);
+    }
+
+    .info-card h1 {
+      color: var(--primary-dark);
+      font-size: 1.85rem;
+      margin-bottom: 14px;
+    }
+
+    .info-card h2 {
+      color: var(--text-main);
+      font-size: 1.25rem;
+      margin: 22px 0 8px;
+    }
+
+    .info-card p {
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .contact-highlight {
+      display: inline-block;
+      margin-top: 10px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      font-weight: 700;
+      padding: 12px 18px;
+      border-radius: 10px;
+      border: 1px solid #cde0cf;
+    }
+
+    /* Footer */
+    footer {
+      background: #1f2622;
+      color: #d7deda;
+      padding: 38px 20px;
+      margin-top: 40px;
+    }
+
+    .footer-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer-brand h3 {
+      color: #ffffff;
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+    }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      color: #aeb8b2;
+      max-width: 380px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links button {
+      background: none;
+      border: none;
+      color: #d7deda;
+      font-size: 0.92rem;
+      cursor: pointer;
+    }
+
+    .footer-links button:hover {
+      color: #81c784;
+    }
+
+    .footer-bottom {
+      max-width: 1140px;
+      margin: 24px auto 0;
+      padding-top: 18px;
+      border-top: 1px solid #323c36;
+      font-size: 0.85rem;
+      color: #9aa59f;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header & Food-Themed SVG Logo -->
+  <header>
+    <div class="nav-container">
+      <div class="brand" onclick="showPage('home')">
+        <!-- Custom Healthy Food & Leaf SVG Logo -->
+        <svg width="44" height="44" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="EL KDDAH 37 Healthy Food Logo">
+          <rect width="48" height="48" rx="12" fill="#E8F5E9"/>
+          <!-- Fresh Herb Leaf -->
+          <path d="M24 9C17.5 11.5 15 17.5 18.5 22.5C22.5 20.5 25.5 15.5 24 9Z" fill="#2E7D32"/>
+          <path d="M25.5 13C30.5 13.5 33.5 18 30.5 22.5C27.2 21.2 25.2 17.5 25.5 13Z" fill="#66BB6A"/>
+          <!-- Wholesome Bowl -->
+          <path d="M11 25H37C37 32.1797 31.1797 38 24 38C16.8203 38 11 32.1797 11 25Z" fill="#8D6E63"/>
+          <path d="M14 25H34" stroke="#A5D6A7" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <div class="brand-text">
+          <span class="brand-title">EL KDDAH 37</span>
+          <span class="brand-sub">Healthy & Traditional Kitchen</span>
+        </div>
+      </div>
+
+      <nav aria-label="Main Navigation">
+        <button class="nav-btn active" id="nav-home" onclick="showPage('home')">Home</button>
+        <button class="nav-btn" id="nav-about" onclick="showPage('about')">About Us</button>
+        <button class="nav-btn" id="nav-privacy" onclick="showPage('privacy')">Privacy & Disclaimer</button>
+        <button class="nav-btn" id="nav-contact" onclick="showPage('contact')">Contact</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ==================== HOME VIEW ==================== -->
+    <section id="view-home" class="view-section active">
+      <div class="hero">
+        <span class="hero-badge">100% Natural Ingredients • Balanced Everyday Meals</span>
+        <h1>Wholesome Healthy & Traditional Recipes</h1>
+        <p>Simple, nourishing dishes made from real whole foods—high-protein bowls, traditional slow-cooked grains, Mediterranean legumes, and heart-healthy baked meals.</p>
+      </div>
+
+      <!-- Top Display Ad Slot -->
+      <div class="ad-slot" aria-label="Advertisement">
+        Advertisement Space — Ready for AdSense / Display Unit
+      </div>
+
+      <div class="filter-bar">
+        <h2>Explore Our Recipes (8 Curated Dishes)</h2>
+        <div class="filter-pills">
+          <button class="pill active" onclick="filterRecipes('all', this)">All Recipes</button>
+          <button class="pill" onclick="filterRecipes('High-Protein', this)">High-Protein</button>
+          <button class="pill" onclick="filterRecipes('Traditional', this)">Traditional</button>
+          <button class="pill" onclick="filterRecipes('Mediterranean', this)">Mediterranean</button>
+        </div>
+      </div>
+
+      <div class="recipe-grid" id="recipe-grid">
+        <!-- Recipe cards injected cleanly via JavaScript -->
+      </div>
+
+      <!-- Bottom Display Ad Slot -->
+      <div class="ad-slot" aria-label="Advertisement">
+        Advertisement Space — Ready for AdSense / Display Unit
+      </div>
+    </section>
+
+    <!-- ==================== SINGLE RECIPE VIEW ==================== -->
+    <section id="view-recipe" class="view-section">
+      <div class="recipe-detail-box" id="recipe-detail-content">
+        <!-- Individual recipe full page injected here -->
+      </div>
+    </section>
+
+    <!-- ==================== ABOUT VIEW ==================== -->
+    <section id="view-about" class="view-section">
+      <div class="info-card">
+        <h1>About EL KDDAH 37</h1>
+        <p>Welcome to <strong>EL KDDAH 37</strong>, a digital recipe journal dedicated to clean, nourishing, and time-tested cooking. We focus on accessible ingredients—such as whole grains, legumes, olive oil, lean proteins, fresh herbs, and seasonal vegetables.</p>
+        <h2>Our Philosophy</h2>
+        <p>Healthy eating does not require complicated trends or expensive supplements. By returning to traditional kitchen staples like barley, lentils, chickpeas, and wild-caught fish, anyone can prepare satisfying meals that support steady energy and long-term wellness.</p>
+        <h2>Get in Touch</h2>
+        <p>Have a recipe question, feedback, or partnership inquiry? Reach out anytime via email:</p>
+        <div class="contact-highlight">abderrhmaneelkddah@gmail.com</div>
+      </div>
+    </section>
+
+    <!-- ==================== PRIVACY & DISCLAIMER VIEW ==================== -->
+    <section id="view-privacy" class="view-section">
+      <div class="info-card">
+        <h1>Privacy Policy & Nutrition Disclaimer</h1>
+        <h2>1. Privacy & Advertising Cookies</h2>
+        <p><strong>EL KDDAH 37</strong> respects visitor privacy. Third-party advertising partners (such as Google AdSense) may use cookies or web beacons to serve relevant advertisements based on user visits to this and other websites. Visitors may opt out of personalized advertising through their browser or ad network settings.</p>
+        <h2>2. Nutrition & Health Disclaimer</h2>
+        <p>All recipes, ingredient notes, and nutritional highlights published on <strong>EL KDDAH 37</strong> are provided strictly for general informational and culinary inspiration purposes. They do not constitute medical or dietary advice. Always consult a qualified healthcare professional or registered dietitian regarding specific allergies, medical conditions, or personalized nutrition plans.</p>
+        <h2>3. Contact Information</h2>
+        <p>For privacy inquiries or content requests, contact us at: <strong>abderrhmaneelkddah@gmail.com</strong></p>
+      </div>
+    </section>
+
+    <!-- ==================== CONTACT VIEW ==================== -->
+    <section id="view-contact" class="view-section">
+      <div class="info-card">
+        <h1>Contact EL KDDAH 37</h1>
+        <p>We welcome questions about our recipes, ingredient substitutions, and general website feedback.</p>
+        <h2>Direct Email</h2>
+        <p>You can contact our editorial desk directly at:</p>
+        <div class="contact-highlight">abderrhmaneelkddah@gmail.com</div>
+        <h2>Response Time</h2>
+        <p>We review messages regularly and aim to respond within 24 to 48 hours.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <h3>EL KDDAH 37</h3>
+        <p>Wholesome healthy and traditional natural recipes crafted for everyday home cooking.</p>
+      </div>
+      <div class="footer-links">
+        <button onclick="showPage('home')">Home</button>
+        <button onclick="showPage('about')">About Us</button>
+        <button onclick="showPage('privacy')">Privacy & Disclaimer</button>
+        <button onclick="showPage('contact')">Contact</button>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 EL KDDAH 37. All rights reserved.</span>
+      <span>Contact: abderrhmaneelkddah@gmail.com</span>
+    </div>
+  </footer>
+
+  <script>
+    const recipes = [
+      {
+        id: "chicken-quinoa-bowl",
+        title: "High-Protein Chicken & Quinoa Power Bowl",
+        category: "High-Protein",
+        prepTime: "25 mins",
+        servings: "2 Servings",
+        calories: "~480 kcal",
+        image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=900&q=80",
+        shortDesc: "Herb-grilled chicken breast served over fluffy quinoa with avocado, cucumber, cherry tomatoes, and lemon-olive oil dressing.",
+        ingredients: [
+          "250g skinless chicken breast, sliced",
+          "1 cup cooked white or tricolor quinoa",
+          "1 ripe avocado, sliced",
+          "1 cup cherry tomatoes, halved",
+          "1/2 cucumber, diced",
+          "2 tbsp extra-virgin olive oil",
+          "Juice of 1 fresh lemon, sea salt, black pepper, and dried oregano"
+        ],
+        steps: [
+          "Season the chicken breast slices with olive oil, oregano, sea salt, and black pepper.",
+          "Grill or pan-sear over medium-high heat for 5–6 minutes per side until cooked through, then let rest for 3 minutes.",
+          "Divide warm quinoa into two bowls and arrange cherry tomatoes, cucumber, and avocado alongside.",
+          "Top with sliced grilled chicken and drizzle with fresh lemon juice and olive oil before serving."
+        ],
+        nutritionNote: "Rich in complete plant and lean animal protein (~38g per serving) plus heart-healthy monounsaturated fats."
+      },
+      {
+        id: "traditional-lentil-stew",
+        title: "Traditional Lentil & Root Vegetable Stew",
+        category: "Traditional",
+        prepTime: "35 mins",
+        servings: "4 Servings",
+        calories: "~340 kcal",
+        image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=900&q=80",
+        shortDesc: "Slow-simmered brown lentils with carrots, celery, garlic, cumin, and fresh cilantro in a comforting natural broth.",
+        ingredients: [
+          "1.5 cups brown or green lentils, rinsed",
+          "2 medium carrots, diced",
+          "1 yellow onion, finely chopped",
+          "3 cloves garlic, minced",
+          "4 cups low-sodium vegetable broth",
+          "1 tsp ground cumin, 1/2 tsp turmeric, and 1 bay leaf",
+          "2 tbsp olive oil and fresh chopped cilantro"
+        ],
+        steps: [
+          "Warm olive oil in a heavy pot over medium heat and sauté onion, carrots, and garlic for 5 minutes until fragrant.",
+          "Stir in cumin, turmeric, and rinsed lentils so the spices coat the vegetables.",
+          "Pour in the vegetable broth, add the bay leaf, bring to a boil, then simmer gently for 25 minutes until lentils are tender.",
+          "Remove the bay leaf, season with sea salt, and garnish with fresh cilantro."
+        ],
+        nutritionNote: "Packed with plant-based iron, slow-digesting complex carbohydrates, and ~18g of dietary fiber per bowl."
+      },
+      {
+        id: "mediterranean-chickpea-salad",
+        title: "Mediterranean Chickpea & Herb Salad",
+        category: "Mediterranean",
+        prepTime: "15 mins",
+        servings: "3 Servings",
+        calories: "~310 kcal",
+        image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80",
+        shortDesc: "Crisp cucumbers, bell peppers, red onion, parsley, and tender chickpeas tossed in a bright garlic-lemon vinaigrette.",
+        ingredients: [
+          "2 cups cooked chickpeas, drained and rinsed",
+          "1 red bell pepper, diced",
+          "1 cucumber, diced",
+          "1/4 red onion, thinly sliced",
+          "1/2 cup fresh flat-leaf parsley, chopped",
+          "3 tbsp extra-virgin olive oil and 2 tbsp lemon juice",
+          "1/2 tsp sumac or paprika, sea salt, and cracked pepper"
+        ],
+        steps: [
+          "Combine chickpeas, diced bell pepper, cucumber, red onion, and fresh parsley in a large mixing bowl.",
+          "Whisk together olive oil, lemon juice, sumac, salt, and pepper in a small cup.",
+          "Pour the dressing over the salad and toss gently until evenly coated.",
+          "Chill for 10 minutes before serving so the herbs infuse the chickpeas."
+        ],
+        nutritionNote: "A no-cook Mediterranean staple rich in polyphenols, plant protein, and gut-friendly prebiotic fiber."
+      },
+      {
+        id: "old-school-barley-dish",
+        title: "Old-School Roasted Barley & Herb Pilaf",
+        category: "Traditional",
+        prepTime: "40 mins",
+        servings: "4 Servings",
+        calories: "~360 kcal",
+        image: "https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&w=900&q=80",
+        shortDesc: "Nutty whole-grain pearl barley simmered with toasted almonds, caramelized onions, and garden herbs.",
+        ingredients: [
+          "1.5 cups pearl or hulled barley, rinsed",
+          "1 large onion, thinly sliced",
+          "3.5 cups water or light vegetable stock",
+          "2 tbsp olive oil",
+          "1/4 cup toasted slivered almonds",
+          "1/2 tsp cinnamon, sea salt, and fresh thyme leaves"
+        ],
+        steps: [
+          "Sauté sliced onions in olive oil over medium-low heat for 8 minutes until golden and sweet.",
+          "Add rinsed barley and toast for 2 minutes while stirring.",
+          "Pour in the water or stock, add thyme and salt, cover, and simmer for 30 minutes until tender.",
+          "Fluff with a fork and top with toasted almonds before serving."
+        ],
+        nutritionNote: "Whole barley provides beta-glucan soluble fiber known to support steady blood sugar and digestive health."
+      },
+      {
+        id: "baked-herb-salmon",
+        title: "Oven-Baked Lemon & Dill Wild Salmon",
+        category: "High-Protein",
+        prepTime: "20 mins",
+        servings: "2 Servings",
+        calories: "~450 kcal",
+        image: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=900&q=80",
+        shortDesc: "Tender salmon fillets baked with fresh dill, garlic, lemon slices, and roasted green asparagus spears.",
+        ingredients: [
+          "2 salmon fillets (180g each)",
+          "1 bunch fresh asparagus, trimmed",
+          "2 tbsp olive oil",
+          "2 cloves garlic, minced",
+          "Fresh dill sprigs and 4 thin lemon slices",
+          "Sea salt and freshly ground black pepper"
+        ],
+        steps: [
+          "Preheat oven to 200°C (400°F) and line a baking sheet with parchment paper.",
+          "Place salmon fillets and asparagus on the tray, drizzle with olive oil, and rub with minced garlic, salt, and pepper.",
+          "Top each fillet with fresh dill and lemon slices.",
+          "Bake for 12–15 minutes until the salmon flakes easily with a fork."
+        ],
+        nutritionNote: "An exceptional source of omega-3 fatty acids (EPA & DHA), vitamin D, and ~36g of high-quality protein."
+      },
+      {
+        id: "stuffed-sweet-potatoes",
+        title: "Mediterranean Stuffed Roasted Sweet Potatoes",
+        category: "Mediterranean",
+        prepTime: "45 mins",
+        servings: "2 Servings",
+        calories: "~390 kcal",
+        image: "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?auto=format&fit=crop&w=900&q=80",
+        shortDesc: "Caramelized baked sweet potatoes filled with spiced chickpeas, baby spinach, and creamy tahini-lemon drizzle.",
+        ingredients: [
+          "2 medium sweet potatoes, scrubbed",
+          "1 cup cooked chickpeas",
+          "1 cup fresh baby spinach",
+          "2 tbsp pure sesame tahini",
+          "1 tbsp lemon juice and 1 tbsp warm water",
+          "1/2 tsp smoked paprika and sea salt"
+        ],
+        steps: [
+          "Pierce sweet potatoes with a fork and bake at 200°C (400°F) for 35–40 minutes until soft inside.",
+          "Warm chickpeas in a skillet with paprika and wilt the baby spinach for 2 minutes.",
+          "Whisk tahini, lemon juice, warm water, and a pinch of salt into a smooth sauce.",
+          "Split the baked sweet potatoes, fill with the chickpea-spinach mix, and drizzle with tahini sauce."
+        ],
+        nutritionNote: "Loaded with beta-carotene (vitamin A), potassium, calcium from tahini, and balanced plant energy."
+      },
+      {
+        id: "moroccan-zaalouk-eggplant",
+        title: "Traditional Roasted Eggplant & Tomato Salad",
+        category: "Traditional",
+        prepTime: "30 mins",
+        servings: "4 Servings",
+        calories: "~210 kcal",
+        image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=900&q=80",
+        shortDesc: "Smoky diced eggplant simmered with ripe tomatoes, garlic, cumin, sweet paprika, and cold-pressed olive oil.",
+        ingredients: [
+          "2 medium eggplants, peeled in stripes and diced",
+          "3 ripe tomatoes, grated or finely diced",
+          "3 cloves garlic, crushed",
+          "3 tbsp extra-virgin olive oil",
+          "1 tsp sweet paprika, 1 tsp cumin, and sea salt",
+          "Fresh cilantro and parsley, finely chopped"
+        ],
+        steps: [
+          "Combine diced eggplant, tomatoes, garlic, spices, and olive oil in a wide skillet over medium heat.",
+          "Cover and simmer for 18–20 minutes, stirring occasionally until the eggplant is completely tender.",
+          "Uncover and mash gently with a wooden spoon for 3 minutes until thick and rich.",
+          "Stir in fresh herbs and serve warm or at room temperature with whole-grain bread."
+        ],
+        nutritionNote: "A classic North African vegetable dish rich in antioxidants (nasunin & lycopene) and heart-healthy olive oil."
+      },
+      {
+        id: "greek-yogurt-chia-parfait",
+        title: "High-Protein Greek Yogurt, Berry & Chia Bowl",
+        category: "High-Protein",
+        prepTime: "10 mins",
+        servings: "1 Serving",
+        calories: "~320 kcal",
+        image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=900&q=80",
+        shortDesc: "Thick strained Greek yogurt layered with chia seeds, walnuts, blueberries, and a light touch of raw honey.",
+        ingredients: [
+          "1 cup plain Greek yogurt (2% or full-fat)",
+          "1 tbsp chia seeds",
+          "1/2 cup fresh blueberries or sliced strawberries",
+          "1 tbsp raw walnuts, roughly chopped",
+          "1 tsp raw natural honey and a pinch of cinnamon"
+        ],
+        steps: [
+          "Spoon the Greek yogurt into a serving bowl and stir in the chia seeds.",
+          "Top with fresh berries and chopped walnuts.",
+          "Finish with a light drizzle of raw honey and a dusting of cinnamon."
+        ],
+        nutritionNote: "Delivers ~22g of protein along with probiotics, omega-3 ALA from chia and walnuts, and low-glycemic berries."
+      }
+    ];
+
+    function renderRecipeCards(filter = "all") {
+      const grid = document.getElementById("recipe-grid");
+      grid.innerHTML = "";
+
+      const filtered = filter === "all"
+        ? recipes
+        : recipes.filter(r => r.category === filter);
+
+      filtered.forEach(recipe => {
+        const card = document.createElement("article");
+        card.className = "recipe-card";
+        card.innerHTML = `
+          <img src="${recipe.image}" alt="${recipe.title}" loading="lazy" />
+          <div class="card-body">
+            <div class="card-meta">
+              <span>${recipe.category}</span>
+              <span>⏱ ${recipe.prepTime}</span>
+            </div>
+            <h3 class="card-title">${recipe.title}</h3>
+            <p class="card-desc">${recipe.shortDesc}</p>
+            <button class="btn-read" onclick="openRecipe('${recipe.id}')">View Full Recipe →</button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function filterRecipes(category, btnElement) {
+      document.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
+      btnElement.classList.add("active");
+      renderRecipeCards(category);
+    }
+
+    function openRecipe(recipeId) {
+      const recipe = recipes.find(r => r.id === recipeId);
+      if (!recipe) return;
+
+      const detailContainer = document.getElementById("recipe-detail-content");
+      detailContainer.innerHTML = `
+        <button class="back-btn" onclick="showPage('home')">← Back to All Recipes</button>
+        <div class="detail-header">
+          <h1>${recipe.title}</h1>
+          <div class="detail-stats">
+            <span><strong>Category:</strong> ${recipe.category}</span>
+            <span><strong>Prep & Cook:</strong> ${recipe.prepTime}</span>
+            <span><strong>Yield:</strong> ${recipe.servings}</span>
+            <span><strong>Est. Energy:</strong> ${recipe.calories}</span>
+          </div>
+        </div>
+
+        <img class="detail-hero-img" src="${recipe.image}" alt="${recipe.title}" />
+
+        <div class="ad-slot" aria-label="Advertisement">
+          Advertisement Space — In-Article Recipe Ad Unit
+        </div>
+
+        <div class="detail-grid">
+          <div class="ingredients-box">
+            <h3>Ingredients</h3>
+            <ul>
+              ${recipe.ingredients.map(item => `<li>${item}</li>`).join("")}
+            </ul>
+          </div>
+          <div class="steps-box">
+            <h3>Step-by-Step Instructions</h3>
+            <ol>
+              ${recipe.steps.map(step => `<li>${step}</li>`).join("")}
+            </ol>
+          </div>
+        </div>
+
+        <div class="nutrition-note">
+          <strong>Nutrition & Wellness Highlight:</strong> ${recipe.nutritionNote}
+        </div>
+      `;
+
+      switchSection("view-recipe");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function showPage(pageName) {
+      document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
+      const activeNav = document.getElementById(`nav-${pageName}`);
+      if (activeNav) activeNav.classList.add("active");
+
+      switchSection(`view-${pageName}`);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function switchSection(sectionId) {
+      document.querySelectorAll(".view-section").forEach(sec => sec.classList.remove("active"));
+      const target = document.getElementById(sectionId);
+      if (target) target.classList.add("active");
+    }
+
+    // Initialize home cards on load
+    renderRecipeCards("all");
+  </script>
+</body>
+</html>
